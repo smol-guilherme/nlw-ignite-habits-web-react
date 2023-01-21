@@ -11,7 +11,6 @@ interface HabitProps {
 
 export function HabitDay(props: HabitProps) {
   const percentage = Math.round((props.completed / props.amount) * 100);
-  console.log(percentage);
 
   return (
     <Popover.Root>
