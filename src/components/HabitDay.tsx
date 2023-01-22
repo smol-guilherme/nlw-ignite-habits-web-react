@@ -3,14 +3,19 @@ import * as Checkbox from "@radix-ui/react-checkbox";
 import { ProgressBar } from "./ProgressBar";
 import { Check } from "phosphor-react";
 import clsx from "clsx";
+import dayjs from "dayjs";
 
-interface HabitProps {
-  completed: number;
-  amount: number;
+interface HabitDayProps {
+  date: Date;
+  completed?: number;
+  amount?: number;
 }
 
-export function HabitDay(props: HabitProps) {
-  const percentage = Math.round((props.completed / props.amount) * 100);
+export function HabitDay({ completed = 0, amount = 0, date }: HabitDayProps) {
+  const percentage = amount > 0 ? Math.round((completed / amount) * 100) : 0;
+
+  const dayOfWeek = dayjs(date).format("dddd");
+  const dayAndMonth = dayjs(date).format("DD/MM");
 
   return (
     <Popover.Root>
@@ -29,8 +34,10 @@ export function HabitDay(props: HabitProps) {
       />
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col">
-          <span className="font-semibold text-zinc-400"></span>
-          <span className="mt-1 font-extrabold leading-tight text-3xl"></span>
+          <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
+          <span className="mt-1 font-extrabold leading-tight text-3xl">
+            {dayAndMonth}
+          </span>
           <ProgressBar progress={percentage} />
 
           <div className="mt-6 flex flex-col gap-3">
@@ -40,9 +47,7 @@ export function HabitDay(props: HabitProps) {
                   <Check size={20} className="text-white" />
                 </Checkbox.Indicator>
               </div>
-              <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-400">
-                Á
-              </span>
+              <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-400"></span>
             </Checkbox.Root>
           </div>
 
