@@ -29,17 +29,23 @@ export function HabitDay({
   return (
     <Popover.Root>
       <Popover.Trigger
-        className={clsx("w-10 h-10 border-2 rounded-lg", {
-          "bg-zinc-900 border-zinc-800": percentage === 0,
-          "bg-violet-900 border-violet-600": percentage > 0 && percentage < 20,
-          "bg-violet-800 border-violet-600":
-            percentage >= 20 && percentage < 40,
-          "bg-violet-700 border-violet-500":
-            percentage >= 40 && percentage < 60,
-          "bg-violet-600 border-violet-500":
-            percentage >= 60 && percentage < 80,
-          "bg-violet-500 border-violet-400": percentage >= 80,
-        })}
+        className={clsx(
+          `w-10 h-10 border-2 rounded-lg transition-colors 
+          focus:outline-none focus:ring-2 focus:ring-violet-600 
+          focus:ring-offset-2 focus:ring-offset-background`,
+          {
+            "bg-zinc-900 border-zinc-800": percentage === 0,
+            "bg-violet-900 border-violet-600":
+              percentage > 0 && percentage < 20,
+            "bg-violet-800 border-violet-600":
+              percentage >= 20 && percentage < 40,
+            "bg-violet-700 border-violet-500":
+              percentage >= 40 && percentage < 60,
+            "bg-violet-600 border-violet-500":
+              percentage >= 60 && percentage < 80,
+            "bg-violet-500 border-violet-400": percentage >= 80,
+          }
+        )}
       />
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col">
