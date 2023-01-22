@@ -19,8 +19,6 @@ type Summary = {
 export function SummaryTable() {
   const [summary, setSummary] = useState<Summary>([]);
 
-  console.log(summary);
-
   useEffect(() => {
     api.get("summary").then((res) => {
       setSummary(res.data);
@@ -40,21 +38,21 @@ export function SummaryTable() {
         ))}
       </div>
       <div className="grid grid-rows-7 grid-flow-col gap-3">
-        {summaryDates.map((date) => {
-          const dayInSummary = summary.find((day) => {
-            return dayjs(date).isSame(day.date, "day");
-          });
-          console.log(dayInSummary);
+        {summary.length > 0 &&
+          summaryDates.map((date) => {
+            const dayInSummary = summary.find((day) => {
+              return dayjs(date).isSame(day.date, "day");
+            });
 
-          return (
-            <HabitDay
-              key={date.toString()}
-              date={date}
-              amount={dayInSummary?.amount}
-              completed={dayInSummary?.completed}
-            />
-          );
-        })}
+            return (
+              <HabitDay
+                key={date.toString()}
+                date={date}
+                amount={dayInSummary?.amount}
+                defaultCompleted={dayInSummary?.completed}
+              />
+            );
+          })}
 
         {amountOfDaysToFill > 0 &&
           Array.from({ length: amountOfDaysToFill }).map((_, index) => (
